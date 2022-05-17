@@ -1,0 +1,99 @@
+.home-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32rem;
+    align-items: center;
+    margin: 8rem auto;
+}
+.home-header{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #fff;
+}
+.title{
+    font-size: 4.5rem;
+}
+.text{
+    font-size: 3rem;
+}
+.search-input{
+    width: 40rem;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-icon{
+    position: absolute;
+    color: #BEBEBE;
+    top: 1.5rem;
+    left: 2rem;
+}
+
+.icon{
+    font-size: 3rem;
+}
+
+.search-input input{
+    width: 100%;
+    padding: 1rem 1rem 1rem 6rem;
+    border-radius: 1rem;
+    outline: none;
+    border-color: #BEBEBE;
+    font-size: 3rem;
+}
+
+
+
+
+.home-body{
+    min-width: 120rem;
+}
+.search-results{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 2rem 2rem 4rem 4rem;
+    border-radius: 1rem;
+    gap: 5px;
+}
+
+.card-time{
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.card-title{
+    font-size: 3rem;
+    text-transform: capitalize;
+    color: #7538AA;
+}
+
+.card-city{
+    font-size: 2rem;
+}
+
+.card-value{
+    font-size: 2rem;
+    font-weight: 700;
+}
+.card-close{
+    height: 3rem;
+}
+.close-btn{
+    font-size: 3rem;
+    float: right;
+    cursor: pointer;
+}
+

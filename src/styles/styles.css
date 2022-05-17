@@ -7,7 +7,17 @@
 }
 
 html {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 	font-size: 62.5%;
 	height: 100%;
+}
+
+body {
+	background: rgb(119, 55, 175);
+	background: linear-gradient(
+		113deg,
+		rgba(119, 55, 175, 1) 7%,
+		rgba(82, 89, 174, 1) 60%,
+		rgba(46, 121, 173, 1) 97%
+	);
 }
