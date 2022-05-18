@@ -41,11 +41,11 @@ const Home = () => {
 				}
 			});
 		}
-        console.log(matches);
+       
 		const uniqueData = [
 			...new Map(matches.map((item) => [item["location"], item])).values(),
 		];
-        console.log(uniqueData);
+       
 		setAllSuggestions(uniqueData);
 	};
 
