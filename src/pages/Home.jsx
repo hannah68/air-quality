@@ -41,10 +41,11 @@ const Home = () => {
 				}
 			});
 		}
-
+        console.log(matches);
 		const uniqueData = [
 			...new Map(matches.map((item) => [item["location"], item])).values(),
 		];
+        console.log(uniqueData);
 		setAllSuggestions(uniqueData);
 	};
 
@@ -56,9 +57,7 @@ const Home = () => {
 
 	// close cart=====================================================
 	const closeCartHandler = (data) => {
-		const filteredArr = selectedCity.filter(
-			(el) => el.location !== data.location
-		);
+		const filteredArr = selectedCity.filter((el) => el.location !== data.location);
 		setSelectedCity(filteredArr);
 	};
 
