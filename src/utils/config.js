@@ -1,0 +1,1 @@
+export const EXTERNAL_API = "https://api.openaq.org/v1/measurements?country_id=gb&country=uk&parameter=pm25&parameter=so2&parameter=o3&parameter=no2";

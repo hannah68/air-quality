@@ -1,49 +1,32 @@
-import { useState, useEffect, useRef } from "react";
-import "../styles/home.css";
+import { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
+
+import "../styles/home.css";
+
 import SearchResult from "../components/SearchResult";
+
+import { EXTERNAL_API } from "../utils/config";
 
 const Home = () => {
 	const [airQualityData, setairQualityData] = useState([]);
 	const [allSuggestions, setAllSuggestions] = useState([]);
 	const [uniqueCities, setUniqueCities] = useState([]);
-    const [height, setHeight] = useState(0);
-    const ref = useRef(null);
+	const [selectedCity, setSelectedCity] = useState([]);
 
-   
 	// useeffect to fetch data===================================
 	useEffect(() => {
 		const fetchData = async () => {
-			const airRes = await fetch(
-				"https://api.openaq.org/v1/measurements?country_id=gb&country=uk&parameter=pm25&parameter=so2&parameter=o3&parameter=no2"
-			);
-
+			const airRes = await fetch(EXTERNAL_API);
 			const airData = await airRes.json();
-			console.log(airData.results);
 			setairQualityData(airData.results);
 		};
 		fetchData();
 
 		if (allSuggestions) {
-			let cities = allSuggestions.map((suggest) => suggest.city);
+			const cities = allSuggestions.map((el) => el.city);
 			setUniqueCities([...new Set(cities)]);
 		}
 	}, [allSuggestions]);
-
-    // useEffect(() => {
-    //     if(ref.current.clientHeight > 0 && uniqueCities){
-    //         setHeight(ref.current.clientHeight)
-    //     }else{
-    //         setHeight(0);
-    //     }
-        
-    // }, [ref, uniqueCities]);
-
-    function convertPXToVh(px) {
-        console.log( px * (100 / document.documentElement.clientHeight));
-        return (px * (100 / document.documentElement.clientHeight)) + 50;
-    }
-
 
 	// change handler==============================================
 	const changeHandler = (e) => {
@@ -51,32 +34,37 @@ const Home = () => {
 		let matches = [];
 
 		if (value.length > 0) {
-			airQualityData.filter((data) => {
-				const str1 = data.city.slice(0, value.length).toLowerCase();
-				if (str1 === value.toLowerCase()) {
+			airQualityData.forEach(data => {
+				const cityName = data.city.slice(0, value.length).toLowerCase();
+				if (cityName === value.toLowerCase()) {
 					matches.push(data);
 				}
 			});
 		}
-        console.log(matches)
-        setAllSuggestions(matches)
-	}
 
-    const cleanFn = () => {
-        console.log('allSuggestions', allSuggestions)
-        const uniqueData = [...new Map(allSuggestions.map((item) => [item["location"], item])).values()];
-        console.log('uniqueData', uniqueData)
-    }
+		const uniqueData = [
+			...new Map(matches.map((item) => [item["location"], item])).values(),
+		];
+		setAllSuggestions(uniqueData);
+	};
 
-    if(allSuggestions.length > 0){
-        cleanFn()
-    }
- 
-    // style={{height: height > 0 ?  convertPXToVh(height) + 'vh': '50vh'}}
-    
+	// click on selected city=========================================
+	const clickListHandler = (city) => {
+		const filteredCity = allSuggestions.filter((el) => el.city === city);
+		setSelectedCity(filteredCity);
+	};
+
+	// close cart=====================================================
+	const closeCartHandler = (data) => {
+		const filteredArr = selectedCity.filter(
+			(el) => el.location !== data.location
+		);
+		setSelectedCity(filteredArr);
+	};
+
 	return (
-		<div className='home-page'>
-			<div className='home-header'>
+		<div className="home-page">
+			<div className="home-header">
 				<h1 className="title">Compare your Air</h1>
 				<div className="text">
 					<p>Compare the air quality between cities in the UK.</p>
@@ -86,25 +74,48 @@ const Home = () => {
 					<span className="search-icon">
 						<BsSearch className="icon" />
 					</span>
-					<input type="text" onChange={changeHandler} />
-					<div className='dropdown-menu' ref={ref}>
-						{uniqueCities &&
-							uniqueCities.map((city, index) => {
-								return (
-									<div key={index} className='dropdown-list'>
-                                        {city}
-									</div>
-								);
-							})}
-					</div>
+					<input
+						type="text"
+						onChange={changeHandler}
+						placeholder="Enter city name..."
+					/>
 				</div>
+				<ul className="dropdown-menu">
+					{uniqueCities &&
+						uniqueCities.map((city, index) => {
+							return (
+								<li
+									key={index}
+									className="dropdown-list"
+									onClick={() => clickListHandler(city)}
+								>
+									{city}
+								</li>
+							);
+						})}
+				</ul>
 			</div>
 			<div className="home-body">
 				<div className="search-results-container">
-                    {allSuggestions.map((data, index)=> {
-                        return <SearchResult key={index} data={data}/>
-                    })}
-					
+					{selectedCity.length > 0
+						? selectedCity.map((data, index) => {
+								return (
+									<SearchResult
+										key={index}
+										data={data}
+										closeCartHandler={closeCartHandler}
+									/>
+								);
+						  })
+						: allSuggestions.map((data, index) => {
+								return (
+									<SearchResult
+										key={index}
+										data={data}
+										closeCartHandler={closeCartHandler}
+									/>
+								);
+						  })}
 				</div>
 			</div>
 		</div>
