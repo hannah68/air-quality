@@ -20,4 +20,7 @@ body {
 		rgba(82, 89, 174, 1) 60%,
 		rgba(46, 121, 173, 1) 97%
 	);
+	height: 100%;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 }
