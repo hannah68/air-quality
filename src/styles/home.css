@@ -1,11 +1,16 @@
 .home-page{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 32rem;
+    justify-content: center; */
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+
+    gap: 9rem;
     align-items: center;
     margin: 8rem auto;
+    height:50vh;
 }
+
 .home-header{
     display: flex;
     flex-direction: column;
@@ -14,6 +19,7 @@
     margin-bottom: 3rem;
     color: #fff;
 }
+
 .title{
     font-size: 4.5rem;
 }
@@ -46,13 +52,32 @@
     font-size: 3rem;
 }
 
+.dropdown-menu{
+    position: absolute;
+    width: 100%;
+    top: 5rem;
+    z-index: -1;
+}
 
+
+.dropdown-list{
+    background-color: #fff;
+    color: #000;
+    padding: 1rem;
+    text-align: left;
+    font-size: 2rem;
+}
+
+.dropdown-list:hover{
+    background-color: #BEBEBE;
+    cursor: pointer;
+}
 
 
 .home-body{
     min-width: 120rem;
 }
-.search-results{
+.search-results-container{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5rem;
